@@ -460,7 +460,6 @@ if (strpos($_SERVER['HTTP_HOST'], "autoconfig.") === 0) {
     // Configuration for Mozilla Thunderbird, Evolution, KMail, Kontact
     $handler = new MozillaHandler();
     $handler->handleRequest();
-    exit(0);
 } else if (strpos($_SERVER['HTTP_HOST'], "autodiscover.") === 0) {
     //Maybe this will fix office 365 nobody knows
     if (strpos($_SERVER['REQUEST_URI'], "autodiscover.json") !== false) {
@@ -469,8 +468,7 @@ if (strpos($_SERVER['HTTP_HOST'], "autoconfig.") === 0) {
       // Configuration for Outlook
       $handler = new OutlookHandler();
       $handler->handleRequest();
-      exit(0);
     };
+} else {
+    $handler->handleRequest();
 }
-
-$handler->handleRequest();
