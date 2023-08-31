@@ -25,6 +25,9 @@ class DomainConfiguration {
     public $domains;
     public $servers = array();
     public $username;
+    public $id;  //deprecated warning with PHP 8.2
+    public $name;  //deprecated warning with PHP 8.2
+    public $nameShort;  //deprecated warning with PHP 8.2
 
     public function addServer($type, $hostname) {
         $server = $this->createServer($type, $hostname);
@@ -53,6 +56,8 @@ class Server {
     public $username;
     public $endpoints;
     public $samePassword;
+    public $defaultPort;  //deprecated warning with PHP 8.2
+    public $defaultSslPort;  //deprecated warning with PHP 8.2
 
     public function __construct($type, $hostname, $defaultPort, $defaultSslPort) {
         $this->type = $type;
