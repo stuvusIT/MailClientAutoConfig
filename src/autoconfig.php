@@ -28,6 +28,9 @@ class DomainConfiguration {
     public $domains;
     public $servers = array();
     public $username;
+    public $id;
+    public $name;
+    public $nameShort;
 
     public function addServer($type, $hostname) {
         $server = $this->createServer($type, $hostname);
