@@ -2,6 +2,9 @@
 
 class Configuration {
     private $items = array();
+    public $id;
+    public $name;
+    public $nameShort;
 
     public function add($id) {
         $result = new DomainConfiguration();
@@ -25,6 +28,9 @@ class DomainConfiguration {
     public $domains;
     public $servers = array();
     public $username;
+    public $id;
+    public $name;
+    public $nameShort;
 
     public function addServer($type, $hostname) {
         $server = $this->createServer($type, $hostname);
@@ -53,6 +59,8 @@ class Server {
     public $username;
     public $endpoints;
     public $samePassword;
+    public $defaultPort;
+    public $defaultSslPort;
 
     public function __construct($type, $hostname, $defaultPort, $defaultSslPort) {
         $this->type = $type;
