@@ -104,12 +104,13 @@ interface UsernameResolver {
 class LDAPUsernameResolver implements UsernameResolver {
     private $fileName;
 
-    function __construct($server, $user_dn, $password, $tree, $attrs) {
+    function __construct($server, $user_dn, $password, $filter, $tree, $attrs) {
         $this->server = $server;
         $this->user_dn = $user_dn;
         $this->password = $password;
         $this->tree = $tree;
         $this->attrs = $attrs;
+        $this->filter = $filter;
     }
 
     public function findUsername($request) {
@@ -131,8 +132,8 @@ class LDAPUsernameResolver implements UsernameResolver {
             if ($ldapbind) {
                 $mail = $request->email;
                 $mail_escaped = ldap_escape($mail, "", LDAP_ESCAPE_FILTER);
-                $filter = "(|(mail=" . $mail_escaped . ")(gosaMailAlternateAddress=" . $mail_escaped . "))";
-                $result = ldap_search($ldapconn, $this->tree, $filter, $this->attrs) or die ("Error in search query: ".ldap_error($ldapconn));
+                $expanded_filter = str_replace("%m",$mail_escaped, $this->filter);
+                $result = ldap_search($ldapconn, $this->tree, $expanded_filter, $this->attrs) or die ("Error in search query: ".ldap_error($ldapconn));
                 $data = ldap_get_entries($ldapconn, $result);
                 if($data["count"]==1){
                     $username = $data[0]["uid"][0];
